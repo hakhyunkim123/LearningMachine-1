@@ -2,7 +2,6 @@ import io
 import os
 import enum
 
-#from base64 import b64decode
 import base64
 import tensorflow as tf
 from PIL import Image
@@ -19,7 +18,6 @@ current_dir = os.path.dirname(__file__)
 from tensorflow.contrib.slim.nets import inception
 
 from keras.utils import to_categorical
-#from keras.preprocessing import image
 from keras.applications.inception_v3 import InceptionV3, decode_predictions
 from keras.layers.core import K
 from keras import backend
@@ -151,7 +149,7 @@ def classify_api(request):
 			data["adversarial"] = {}
 			for i in range(len(result)) :
 				data["adversarial"][result[i][1]] = float(result[i][2])
-
+				
 			sess.close()
 
 		elif model == 'mnist':

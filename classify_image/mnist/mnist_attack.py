@@ -46,7 +46,6 @@ def mnist_jsma_attack(sample, target, model, sess) :
     return adv
 
 def mnist_fgsm_attack(sample, target, model, sess) :
-    #imgs = []
     imgs_stamp_tf.append(sample)
 
     fgsm_params = {
@@ -79,7 +78,6 @@ def mnist_cw_attack(sample, target, model, sess, targeted=True, attack_iteration
                 'confidence' : 1,
                 'max_iterations': attack_iterations,
                 'learning_rate': 0.1,
-                #'batch_size': 1,
                 'clip_min': 0.,
                 'clip_max': 1.,
                 'initial_const': 10}
@@ -173,18 +171,13 @@ def mnist_attack_func(sample_class, target_class, mnist_algorithm):
     save_image = save_image.convert('RGB')
     save_image.save(SAVE_PATH)
 
-    # save gif image #
-    #from PIL import Image
-    
+
     sv_imgs = []
-    #from cleverhans.attacks_tf import imgs_stamp_tf 
     for i in range(len(imgs_stamp_tf)):
         two_d_img = (np.reshape(imgs_stamp_tf[i], (28, 28)) * 255).astype(np.uint8)
         save_image = Image.fromarray(two_d_img)
         save_image = save_image.convert('RGB')
         sv_imgs.append(save_image)
-        #name = 'jsma_test ' + str(i) + '.png'
-        #save_image.save(name)
 
     sv_imgs[0].save(SAVE_GIF_PATH,
                save_all=True,

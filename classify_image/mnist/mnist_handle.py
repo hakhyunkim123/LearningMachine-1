@@ -11,14 +11,6 @@ def get_mnist_idx(y_test, want_class) :
             return i
 
 def to_categorical(y, num_classes=None):
-    """
-    Converts a class vector (integers) to binary class matrix.
-    This is adapted from the Keras function with the same name.
-    :param y: class vector to be converted into a matrix
-              (integers from 0 to num_classes).
-    :param num_classes: num_classes: total number of classes.
-    :return: A binary matrix representation of the input.
-    """
     y = np.array(y, dtype='int').ravel()
     if not num_classes:
         num_classes = np.max(y) + 1

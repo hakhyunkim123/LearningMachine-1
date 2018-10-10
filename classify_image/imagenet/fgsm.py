@@ -25,7 +25,6 @@ def deprocess(input_image):
     img /= 2.
     img += 0.5
     img *= 255. # [-1,1] -> [0,255]
-    #img = image.array_to_img(img).copy()
     return img
 
 def preprocess(input_image):
@@ -113,21 +112,6 @@ def fgsm_attack_iter(model, x_input, input_img, sess, n):
         imgs_stamp_tf.append(adv_image)
     
     attack_time = time.time() - start_time
-
-    ## save gif image ##
-    """
-    sv_img = []
-    for img in adv_iamges :
-        d_img = deprocess(img[0]).astype(np.uint8)
-        sv_img.append(Image.fromarray(d_img))
-    
-    print('save gif image.')
-    sv_img[0].save('anitest.gif',
-               save_all=True,
-               append_images=sv_img[1:],
-               duration=100,
-               loop=0)
-    """
     return adv_image, attack_time
 
 

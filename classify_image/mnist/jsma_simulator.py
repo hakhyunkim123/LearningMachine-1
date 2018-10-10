@@ -83,17 +83,6 @@ def simulate_jsma():
         adv_x = mnist_jsma_attack(sample, target, model, sess)
 
         # Instantiate a SaliencyMapMethod attack object
-        """
-        jsma = SaliencyMapMethod(model, back='tf', sess=sess)
-        jsma_params = {'theta': 1., 'gamma': 0.1,
-                    'clip_min': 0., 'clip_max': 1.,
-                    'y_target': None}
-
-        jsma_params['y_target'] = y_test[target_idx:target_idx+1]
-        adv_x = jsma.generate_np(sample, **jsma_params)
-        """
-
-
         print('sample class:', np.argmax(y_test[sample_idx]))
         print('target class:', np.argmax(y_test[target_idx]))
 

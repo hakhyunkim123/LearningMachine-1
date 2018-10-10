@@ -159,6 +159,7 @@ loadImage = function(file) {
 var adver_src = '';
 var adver_gif_src = '';
 var state = 1;
+
 function change_image() {
   console.log("change Event!");
   if(state==0) {
@@ -178,25 +179,15 @@ loadStats = function(jsonData) {
       duration:200,
       queue: false,
     }).css("z-index", 0);
-  //switchCard(2);
+
   var data = JSON.parse(jsonData);
   var chartData = [{x:[], y:[], type:'bar', text: [], textposition: 'auto'}];
   var adverData = [{x:[], y:[], type:'bar', text: [], textposition: 'auto'}];
 
   if (data["success"] == true) {
-    
     $('#adver-card').attr('src', data["adverimage"]);
     adver_gif_src = data["adverimage_gif"]
     adver_src = data["adverimage"]
-    //$('#adver-card').attr('data-gif', data["adverimage_gif"]);
-
-    //$('#adver-card').attr('object-fit', 'cover');
-    //$('#adver-card').attr('object-position', 'centor');
-    //$('#adver-card').attr('width', 'inherit');
-    //$('#adver-card').attr('height', '100%');
-    
-   
-    //$('#adver-card').attr('src', data["adverimage_gif"]);
 
     if (data["model"] == 'mnist') {
       $('#mnist-img-card').attr('src', data["input_image"]);

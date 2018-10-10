@@ -324,21 +324,11 @@ def jsma(sess,
     """
     # Copy the source sample and define the maximum number of features
     # (i.e. the maximum number of iterations) that we may perturb
-    #imgs_stamp_tf = [] ### make gif image ###
 
     adv_x = copy.copy(sample)
 
     tmp = copy.deepcopy(adv_x)
     imgs_stamp_tf.append(tmp)
-    
-    """
-    from PIL import Image
-    two_d_img = (np.reshape(imgs_stamp_tf[0], (28, 28)) * 255).astype(np.uint8)
-    save_image = Image.fromarray(two_d_img)
-    save_image = save_image.convert('RGB')
-    name = 'jsma_test_origin.png'
-    save_image.save(name)
-    """
 
     # count the number of features. For MNIST, 1x28x28 = 784; for
     # CIFAR, 3x32x32 = 3072; etc.
@@ -411,15 +401,6 @@ def jsma(sess,
         tmp = copy.deepcopy(adv_x)
         tmp_adv_x = np.reshape(tmp, original_shape)
         
-        """
-        from PIL import Image
-        two_d_img = (np.reshape(tmp_adv_x, (28, 28)) * 255).astype(np.uint8)
-        save_image = Image.fromarray(two_d_img)
-        save_image = save_image.convert('RGB')
-        name = 'jsma iter ' + str(iteration) + '.png'
-        save_image.save(name)
-        """
-        
         imgs_stamp_tf.append(tmp_adv_x)
 
     if current == target:
@@ -430,27 +411,6 @@ def jsma(sess,
 
     # Compute the ratio of pixels perturbed by the algorithm
     percent_perturbed = float(iteration * 2) / nb_features
-
-    # save the gif image #
-    
-    """
-    from PIL import Image
-    sv_imgs = []
-    for i in range(len(imgs_stamp_tf)):
-        two_d_img = (np.reshape(imgs_stamp_tf[i], (28, 28)) * 255).astype(np.uint8)
-        save_image = Image.fromarray(two_d_img)
-        save_image = save_image.convert('RGB')
-        sv_imgs.append(save_image)
-        #name = 'jsma_test ' + str(i) + '.png'
-        #save_image.save(name)
-
-    sv_imgs[0].save('eejsma_test_mnist.gif',
-               save_all=True,
-               append_images=sv_imgs[1:],
-               duration=100,
-               loop=0)
-    print('saved the gif image')
-    """
 
     # Report success when the adversarial example is misclassified in the
     # target class
@@ -873,8 +833,6 @@ class CarliniWagnerL2(object):
         """
         Run the attack on a batch of instance and labels.
         """
-
-        #img_stamp = []
         imgs_stamp_tf.append(imgs)
 
         def compare(x, y):
@@ -994,22 +952,6 @@ class CarliniWagnerL2(object):
             o_bestl2 = np.array(o_bestl2)
             mean = np.mean(np.sqrt(o_bestl2[o_bestl2 < 1e9]))
             _logger.debug("   Mean successful distortion: {:.4g}".format(mean))
-
-        """
-        from PIL import Image
-        sv_imgs = []
-        for i in range(len(imgs_stamp_tf)):
-            two_d_img = (np.reshape(imgs_stamp_tf[i], (28, 28)) * 255).astype(np.uint8)
-            save_image = Image.fromarray(two_d_img)
-            save_image = save_image.convert('RGB')
-            sv_imgs.append(save_image)
-
-        sv_imgs[0].save('cw_test_mnist.gif',
-                save_all=True,
-                append_images=sv_imgs[1:],
-                duration=100,
-                loop=0)
-        """
 
         # return the best solution found
         o_bestl2 = np.array(o_bestl2)
@@ -1470,8 +1412,6 @@ def deepfool_attack(sess,
     :return: Adversarial examples
     """
     import copy
-    #img_stamp = []
-
     adv_x = copy.copy(sample)
     imgs_stamp_tf.append(copy.deepcopy(adv_x))
 
@@ -1510,26 +1450,7 @@ def deepfool_attack(sess,
 
         adv_x = np.clip(r_tot + sample, clip_min, clip_max)
 
-        ## ADD BY HAKHYUNKIM ##
         imgs_stamp_tf.append(copy.deepcopy(adv_x))
-        """
-        def deprocess(input_image):
-            img = input_image.copy()
-            img /= 2.
-            img += 0.5
-            img *= 255. # [-1,1] -> [0,255]
-            #img = image.array_to_img(img).copy()
-            return img
-        
-        from PIL import Image
-        # Save noise
-        noise = imgs_stamp_tf[0][0] - adv_x[0]
-        d_img = deprocess(100*noise).astype(np.uint8)
-        sv_img = Image.fromarray(d_img)
-        name = 'df'+str(iteration)+'.png' 
-        sv_img.save(name)
-        """
-        ####################################################################################
 
         current = utils_tf.model_argmax(sess, x, logits, adv_x, feed=feed)
         if current.shape == ():
@@ -1547,28 +1468,6 @@ def deepfool_attack(sess,
     adv_x = np.clip((1 + overshoot) * r_tot + sample, clip_min, clip_max)
 
     imgs_stamp_tf.append(copy.deepcopy(adv_x))
-
-    """
-    def deprocess(input_image):
-        img = input_image.copy()
-        img /= 2.
-        img += 0.5
-        img *= 255. # [-1,1] -> [0,255]
-        #img = image.array_to_img(img).copy()
-        return img
-    print('save the image!')
-    from PIL import Image
-    sv_img = []
-    for img in imgs_stamp_tf :
-        d_img = deprocess(img[0]).astype(np.uint8)
-        sv_img.append(Image.fromarray(d_img))
-    print('save gif image.')
-    sv_img[0].save('df_giftest.gif',
-               save_all=True,
-               append_images=sv_img[1:],
-               duration=100,
-               loop=0)
-    """
 
     return adv_x
 

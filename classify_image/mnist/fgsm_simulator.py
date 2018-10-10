@@ -73,11 +73,6 @@ def mnist_tutorial(train_start=0, train_end=1000, test_start=0,
             report_text = None
         elif is_adv:
             report_text = 'adversarial'
-            # added by hhkim
-            # print('cur:', y_set)
-            # feed_dict = {x: x_set}
-            # probabilities = sess.run(preds, feed_dict)
-            # print(probabilities)
         else:
             report_text = 'legitimate'
         if report_text:

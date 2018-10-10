@@ -96,14 +96,7 @@ def mnist_tutorial_cw(nb_classes=10, attack_iterations=100, targeted=True):
         current_dir = os.getcwd()
         path = os.path.join(current_dir, 'model/mnist_model.ckpt')
         saver.restore(sess, path)
-
-        ###########################################################################
-        # Craft adversarial examples using Carlini and Wagner's approach
-        ###########################################################################
-        #nb_adv_per_sample = str(nb_classes - 1) if targeted else '1'
-        #print('Crafting ' + str(1) + ' * ' + nb_adv_per_sample +
-        #    ' adversarial examples')
-
+        
         # Instantiate a CW attack object
         adv = mnist_cw_attack(sample, target, model, sess)
 

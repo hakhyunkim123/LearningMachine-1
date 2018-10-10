@@ -4,14 +4,12 @@
 <head>
   <title>Image Classification</title>
   <link rel="stylesheet" href="{% static 'css/classify.css' %}" type="text/css" />
-  <link rel="stylesheet" href="{% static 'css/gifplayer.css' %}" type="text/css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/css/materialize.min.css" />
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet" />
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
   <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
   <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.98.1/js/materialize.min.js"></script>
-  <script src="{% static 'js/jquery.gifplayer.js' %}"></script>
   <script src="{% static 'js/classify.js' %}"></script>
 </head>
 
@@ -28,7 +26,6 @@
             elements[i].style.display = 'none';
           }
           switchModel(0);
-          // $('#btn-span').text('Upload and Detect Image');
           $('.uf-button').animate({
             opacity: 0
           }, {
@@ -50,7 +47,6 @@
             elements[i].style.display = 'block';
           }
           switchModel(1);
-          // $('#btn-span').text('MNIST Upload');
           $('.uf-button').animate({
             opacity: 0
           }, {
@@ -193,7 +189,7 @@
       <div class="card result-card"id="result-card"style="display:none; height:17%">
         <div class="card-content black-text file-field" style="padding:5px">
           <div id="result" style="height:calc(100% - 15px); text-align:center;">
-            <p><span id="original" style="color:blue;font-weight:bold;"></span> is recognized by <span id="adversarial" style="color:red;font-weight:bold;"></span></p>
+            <p><span id="original" style="color:blue;font-weight:bold;"></span> is recognized as <span id="adversarial" style="color:red;font-weight:bold;"></span></p>
 			<p>attack speed : <span id="attack_speed" style="color:black;font-weight:bold;"></span> seconds</p>
           </div>
         </div>
